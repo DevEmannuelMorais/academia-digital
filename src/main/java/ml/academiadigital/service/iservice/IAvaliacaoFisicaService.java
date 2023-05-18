@@ -1,4 +1,4 @@
-package ml.academiadigital.service;
+package ml.academiadigital.service.iservice;
 
 public interface IAvaliacaoFisicaService {
 }
