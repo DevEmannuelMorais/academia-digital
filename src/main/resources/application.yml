@@ -1,0 +1,12 @@
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/academia
+    username: postgres
+    password: 134546
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+
+
