@@ -6,6 +6,7 @@ import ml.academiadigital.entity.form.AlunoForm;
 import ml.academiadigital.entity.form.AlunoUpdateForm;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface IAlunoService {
 
@@ -17,6 +18,7 @@ public interface IAlunoService {
     Aluno create(AlunoForm form);
     /**
      * Retorna um Aluno que está no banco de dados de acordo com seu Id.
+     *
      * @param id id do Aluno que será exibido.
      * @return Aluno de acordo com o Id fornecido.
      */
@@ -46,11 +48,13 @@ public interface IAlunoService {
      */
     void delete(Long id);
 
+
+
     /**
      *
      * @param id id do aluno que será recuperada a lista de avaliações
      * @return uma lista com todas as avaliações do aluno de acordo com o Id
      */
-    List<AvaliacaoFisica> getAllAvaliacaoFisicaId(Long id);
+    List<AvaliacaoFisica>  getAllAvaliacaoFisicaId(Long id);
 
 }

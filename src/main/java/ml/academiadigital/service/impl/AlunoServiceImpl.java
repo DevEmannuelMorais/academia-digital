@@ -1,5 +1,6 @@
 package ml.academiadigital.service.impl;
 
+
 import ml.academiadigital.entity.Aluno;
 import ml.academiadigital.entity.AvaliacaoFisica;
 import ml.academiadigital.entity.form.AlunoForm;
@@ -8,13 +9,15 @@ import ml.academiadigital.repository.AlunoRepository;
 import ml.academiadigital.service.iservice.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlunoServiceImpl implements IAlunoService {
     @Autowired
-    private AlunoRepository repository;
+    private AlunoRepository alunoRepository;
 
     @Override
     public Aluno create(AlunoForm form) {
@@ -24,18 +27,19 @@ public class AlunoServiceImpl implements IAlunoService {
         aluno.setBairro(form.getBairro());
         aluno.setDataDeNascimento(form.getDataDeNascimento());
 
-        return repository.save(aluno);
+        return alunoRepository.save(aluno);
 
     }
 
     @Override
     public Aluno get(Long id) {
-        return null;
+       return null;
     }
 
     @Override
+    @Transactional
     public List<Aluno> getAll() {
-        return repository.findAll();
+        return alunoRepository.findAll();
     }
 
     @Override
@@ -50,6 +54,10 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public List<AvaliacaoFisica> getAllAvaliacaoFisicaId(Long id) {
-        return null;
+        Aluno aluno =  alunoRepository.findById(id).get();
+
+        return aluno.getAvaliacoes();
     }
+
+
 }

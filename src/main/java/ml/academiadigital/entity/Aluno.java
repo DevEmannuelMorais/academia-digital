@@ -21,10 +21,13 @@ public class Aluno {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_aluno")
     private Long id;
+
     @Column(length = 50, nullable = false)
     private String nome;
+
     @Column(unique = true)
     private String cpf;
+    
     @Column(length = 100)
     private String bairro;
     private LocalDate dataDeNascimento;
@@ -32,4 +35,6 @@ public class Aluno {
     @OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY)
     @JsonIgnore
     private List<AvaliacaoFisica> avaliacoes = new ArrayList<>();
+
+
 }
