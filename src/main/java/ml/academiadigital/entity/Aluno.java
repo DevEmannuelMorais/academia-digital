@@ -27,9 +27,10 @@ public class Aluno {
 
     @Column(unique = true)
     private String cpf;
-    
+
     @Column(length = 100)
     private String bairro;
+
     private LocalDate dataDeNascimento;
 
     @OneToMany(mappedBy = "aluno", fetch = FetchType.LAZY)

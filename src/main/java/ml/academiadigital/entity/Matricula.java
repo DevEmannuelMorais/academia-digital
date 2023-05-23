@@ -20,5 +20,6 @@ public class Matricula {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "aluno_id")
     private Aluno aluno;
-    private LocalDateTime dataDaMatricula;
+
+    private LocalDateTime dataDaMatricula = LocalDateTime.now();
 }
