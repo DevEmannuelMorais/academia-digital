@@ -7,6 +7,8 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import ml.academiadigital.entity.Aluno;
+import org.springframework.beans.BeanUtils;
 
 import java.time.LocalDate;
 @Data
@@ -29,5 +31,8 @@ public class AlunoForm {
     @Past(message = "Data '${validatedValue}' é inválida.")
     private LocalDate dataDeNascimento;
 
+    public AlunoForm(Aluno entity) {
+        BeanUtils.copyProperties(entity, this);
+    }
 
 }

@@ -5,6 +5,7 @@ import ml.academiadigital.entity.Aluno;
 import ml.academiadigital.entity.AvaliacaoFisica;
 import ml.academiadigital.entity.form.AlunoForm;
 import ml.academiadigital.entity.form.AlunoUpdateForm;
+import ml.academiadigital.exception.AlunoNotFoundException;
 import ml.academiadigital.infra.utils.JavaTimeUtils;
 import ml.academiadigital.repository.AlunoRepository;
 import ml.academiadigital.service.iservice.IAlunoService;
@@ -34,8 +35,9 @@ public class AlunoServiceImpl implements IAlunoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Aluno get(Long id) {
-        return null;
+        return alunoRepository.findById(id).orElseThrow(() ->new AlunoNotFoundException(id));
     }
 
     @Override
@@ -53,7 +55,14 @@ public class AlunoServiceImpl implements IAlunoService {
 
     @Override
     public Aluno update(Long id, AlunoUpdateForm formUpdate) {
-        return null;
+
+        return alunoRepository.findById(id).map(aluno -> {
+            aluno.setNome(formUpdate.getNome());
+            aluno.setBairro(formUpdate.getBairro());
+            aluno.setDataDeNascimento(formUpdate.getDataDeNascimento());
+            return alunoRepository.save(aluno) ;
+        }).get();
+
     }
 
     @Override

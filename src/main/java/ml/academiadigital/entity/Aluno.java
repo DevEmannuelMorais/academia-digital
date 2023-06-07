@@ -38,4 +38,6 @@ public class Aluno {
     private List<AvaliacaoFisica> avaliacoes = new ArrayList<>();
 
 
+
+
 }
