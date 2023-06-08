@@ -10,6 +10,7 @@ import ml.academiadigital.infra.utils.JavaTimeUtils;
 import ml.academiadigital.repository.AlunoRepository;
 import ml.academiadigital.service.iservice.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -52,22 +53,21 @@ public class AlunoServiceImpl implements IAlunoService {
             return alunoRepository.findByDataDeNascimento(localDate);
         }
     }
-
+    @Transactional(readOnly = false)
     @Override
     public Aluno update(Long id, AlunoUpdateForm formUpdate) {
-
-        return alunoRepository.findById(id).map(aluno -> {
+        Aluno aluno = alunoRepository.findById(id).orElseThrow(() -> new AlunoNotFoundException(id));
             aluno.setNome(formUpdate.getNome());
             aluno.setBairro(formUpdate.getBairro());
             aluno.setDataDeNascimento(formUpdate.getDataDeNascimento());
-            return alunoRepository.save(aluno) ;
-        }).get();
+            return alunoRepository.save(aluno);
+
 
     }
 
     @Override
     public void delete(Long id) {
-
+        alunoRepository.deleteById(id);
     }
 
     @Override

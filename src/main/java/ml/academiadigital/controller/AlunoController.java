@@ -4,8 +4,10 @@ package ml.academiadigital.controller;
 import ml.academiadigital.entity.Aluno;
 import ml.academiadigital.entity.AvaliacaoFisica;
 import ml.academiadigital.entity.form.AlunoForm;
+import ml.academiadigital.entity.form.AlunoUpdateForm;
 import ml.academiadigital.service.impl.AlunoServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,9 +34,22 @@ public class AlunoController {
                                   String dataNascimento) {
         return service.getAll(dataNascimento);
     }
-    @GetMapping("{id}")
+    @GetMapping("/{id}")
     public Aluno getAlunoId(@PathVariable Long id){
         return service.get(id);
+    }
+
+    @PutMapping("/{id}")
+    public Aluno updateAluno(@PathVariable Long id, @RequestBody AlunoUpdateForm form) {
+
+
+        return service.update(id, form);
+
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> deleteAlunoId(@PathVariable Long id) {
+        service.delete(id);
+        return ResponseEntity.ok("Aluno deletado com sucesso");
     }
 
 }
