@@ -6,6 +6,7 @@ import ml.academiadigital.entity.AvaliacaoFisica;
 import ml.academiadigital.entity.form.AlunoForm;
 import ml.academiadigital.entity.form.AlunoUpdateForm;
 import ml.academiadigital.service.impl.AlunoServiceImpl;
+import ml.academiadigital.service.iservice.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,39 +17,37 @@ import java.util.List;
 @RequestMapping("/alunos")
 public class AlunoController {
     @Autowired
-    private AlunoServiceImpl service;
+    private IAlunoService alunoService;
 
 
     @PostMapping
     public Aluno create(@RequestBody AlunoForm form) {
-        return service.create(form);
+        return alunoService.create(form);
     }
 
     @GetMapping("/avaliacoes/{id}")
     public List<AvaliacaoFisica> getAllAvaliacaoFisicaId(@PathVariable Long id) {
-        return service.getAllAvaliacaoFisicaId(id);
+        return alunoService.getAllAvaliacaoFisicaId(id);
     }
 
     @GetMapping
     public List<Aluno> getAll(@RequestParam(value = "dataDeNascimento", required = false)
                                   String dataNascimento) {
-        return service.getAll(dataNascimento);
+        return alunoService.getAll(dataNascimento);
     }
     @GetMapping("/{id}")
     public Aluno getAlunoId(@PathVariable Long id){
-        return service.get(id);
+        return alunoService.get(id);
     }
 
     @PutMapping("/{id}")
-    public Aluno updateAluno(@PathVariable Long id, @RequestBody AlunoUpdateForm form) {
-
-
-        return service.update(id, form);
+    public ResponseEntity<Aluno> updateAluno(@PathVariable Long id, @RequestBody AlunoUpdateForm form) {
+        return ResponseEntity.ok(alunoService.update(id, form));
 
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteAlunoId(@PathVariable Long id) {
-        service.delete(id);
+    public ResponseEntity<?> deleteAlunoId(@PathVariable Long id) {
+        alunoService.delete(id);
         return ResponseEntity.ok("Aluno deletado com sucesso");
     }
 
