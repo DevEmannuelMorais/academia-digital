@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
                 contact = @Contact(
                         name = "Emannuel Morais",
                         email = "emanuelmorais2015@gmail.com",
-                        url = "https://github.com/DevEmannuelMorais"
+                        url = " https://github.com/DevEmannuelMorais "
                 ),
                 description = "OpenApi documentation da minha academia digital usando Spring Boot",
                 title = "OpenApi especificações - DevEmannuelMorais",
