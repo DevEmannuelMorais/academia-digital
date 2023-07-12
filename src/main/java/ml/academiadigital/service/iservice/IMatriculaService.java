@@ -11,7 +11,7 @@ public interface IMatriculaService {
      * @param form - formulário referente aos dados para criação da Matrícula no banco de dados.
      * @return - Matrícula recém-criada.
      */
-    Matricula create(MatriculaForm form);
+    List<Matricula> create(MatriculaForm form);
 
     /**
      * Retorna uma Matrícula que está no banco de dados de acordo com seu Id.

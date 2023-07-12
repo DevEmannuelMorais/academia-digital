@@ -1,6 +1,7 @@
 package ml.academiadigital.entity.form;
 
 import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
@@ -11,16 +12,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AvaliacaoFisicaForm {
-
+    @NotNull(message = "O id do aluno não pode ser null")
     @Positive(message = "O Id do aluno precisa ser positivo.")
     private Long alunoId;
 
-    @NotNull(message = "Preencha o campo corretamente.")
     @Positive(message = "'${validatedValue}' precisa ser positivo.")
     private double peso;
 
 
-    @NotNull(message = "Preencha o campo corretamente.")
     @Positive(message = "${validatedValue}' precisa ser positivo.")
     @DecimalMin(value = "150", message = "'${validatedValue}' precisa ser no mínimo {value}.")
     private double altura;

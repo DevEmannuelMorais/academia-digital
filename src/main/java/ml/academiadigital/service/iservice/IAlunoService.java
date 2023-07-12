@@ -30,6 +30,8 @@ public interface IAlunoService {
      */
     List<Aluno> getAll(String dataDeNascimento);
 
+    List<Aluno> getConsultaPaginada(Integer numPagina, Integer numRegistros);
+
 
     /**
      * Atualiza o Aluno.

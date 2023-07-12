@@ -5,12 +5,23 @@ spring:
     url: jdbc:postgresql://localhost:5432/academia?useTimezone=true&serverTimezone=UTC&useLegacyDate
     username: postgres
     password: 134546
+    driver-class-name: org.postgresql.Driver
   jpa:
     show-sql: true
     hibernate:
       ddl-auto: update
     properties:
       hibernate.format_sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: 778575869448-hft40ikfen23ne939urk7qv92ipjmvel.apps.googleusercontent.com
+            client-secret: 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
 
 
 logging:

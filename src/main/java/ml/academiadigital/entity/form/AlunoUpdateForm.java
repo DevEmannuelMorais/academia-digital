@@ -16,13 +16,14 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlunoUpdateForm {
-    @NotEmpty(message = "Preencha o campo corretamente.")
+    @NotNull(message = "O campo nome não pode ser null")
+    @NotEmpty(message = "O campo nome não pode está vazio")
     @Size(min = 3, max =50, message = "'${validatedValue}' precisa estar entre {min} e {max} caracteres.")
     private String nome;
-    @NotEmpty(message = "Preencha o campo corretamente.")
+    @NotEmpty(message = "Preencha o campo corretamente, o campo bairro não pode está vazio.")
     @Size(min = 3, max =50, message = "'${validatedValue}' precisa estar entre {min} e {max} caracteres.")
     private String bairro;
-    @NotNull(message = "Prencha o campo corretamente.")
+    @NotNull(message = "Preencha o campo corretamente, a campo data de nascimento não pode está null.")
     @Past(message = "Data '${validatedValue}' é inválida.")
     private LocalDate dataDeNascimento;
 

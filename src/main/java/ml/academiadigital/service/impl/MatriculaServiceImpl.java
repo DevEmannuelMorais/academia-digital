@@ -8,24 +8,33 @@ import ml.academiadigital.repository.MatriculaRepository;
 import ml.academiadigital.service.iservice.IMatriculaService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class MatriculaServiceImpl implements IMatriculaService {
-    private MatriculaRepository matriculaRepository;
+    private final MatriculaRepository matriculaRepository;
 
-    private AlunoRepository alunoRepository;
+    private final AlunoRepository alunoRepository;
+
+    public MatriculaServiceImpl(MatriculaRepository matriculaRepository, AlunoRepository alunoRepository) {
+        this.matriculaRepository = matriculaRepository;
+        this.alunoRepository = alunoRepository;
+    }
+
     @Override
-    public Matricula create(MatriculaForm form) {
+    public List<Matricula> create(MatriculaForm form) {
         Matricula matricula = new Matricula();
         Aluno aluno = alunoRepository.findById(form.getAlunoId()).get();
 
         matricula.setAluno(aluno);
-        return matriculaRepository.save(matricula);
+        return Collections.singletonList(matriculaRepository.save(matricula));
     }
 
     @Override
     public Matricula get(Long id) {
-        return null;
+        return matriculaRepository.findById(id).get();
     }
 
     @Override
@@ -40,6 +49,8 @@ public class MatriculaServiceImpl implements IMatriculaService {
 
     @Override
     public void delete(Long id) {
-
+        matriculaRepository.deleteById(id);
     }
+
+
 }

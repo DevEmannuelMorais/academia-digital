@@ -15,16 +15,18 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AlunoForm {
+    @NotNull(message = "O campo nome não pode está null")
     @NotEmpty(message = "Preencha o campo corretamente.")
     @Size(min = 3, max =50, message = "'${validatedValue}' precisa estar entre {min} e {max} caracteres.")
     private String nome;
 
+    @NotNull(message = "O campo cpf não pode está null")
     @NotEmpty(message = "Preencha o campo corretamente.")
     //@CPF(message = "'${validatedValue}' é inválido!")
     private String cpf;
 
     @NotEmpty(message = "Preencha o campo corretamente.")
-    @Size(min = 3, max =50, message = "'${validatedValue}' precisa estar entre {min} e {max} caracteres.")
+    @Size(min = 3, max =50, message = "'${validatedValue}' precisa está entre {min} e {max} caracteres.")
     private String bairro;
 
     @NotNull(message = "Prencha o campo corretamente.")

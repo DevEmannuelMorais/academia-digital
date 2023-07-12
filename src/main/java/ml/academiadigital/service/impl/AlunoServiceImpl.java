@@ -10,18 +10,25 @@ import ml.academiadigital.infra.utils.JavaTimeUtils;
 import ml.academiadigital.repository.AlunoRepository;
 import ml.academiadigital.service.iservice.IAlunoService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
+
+
+import static org.springframework.util.Assert.notNull;
 
 @Service
 public class AlunoServiceImpl implements IAlunoService {
-    @Autowired
-    private AlunoRepository alunoRepository;
+    private final AlunoRepository alunoRepository;
+@Autowired
+    public AlunoServiceImpl(AlunoRepository alunoRepository) {
+        this.alunoRepository = alunoRepository;
+    }
 
     @Override
     public Aluno create(AlunoForm form) {
@@ -38,7 +45,25 @@ public class AlunoServiceImpl implements IAlunoService {
     @Override
     @Transactional(readOnly = true)
     public Aluno get(Long id) {
-        return alunoRepository.findById(id).orElseThrow(() ->new AlunoNotFoundException(id));
+        if (id == null) {
+            throw new NullPointerException("Erro ao buscar pessoas por id = null");
+        }
+        try {
+            notNull(id, "Id Obrigatorio");
+            return alunoRepository.findById(id).get();
+        }
+
+        catch (RuntimeException e) {
+
+                throw new AlunoNotFoundException(id);
+
+//            if (e.equals(NullPointerException.class)) {
+//                throw new AlunoNullException("O id do aluno não pode ser nulo ");
+//            }
+
+        }
+
+//        //.orElseThrow(() ->new AlunoNotFoundException(id)
     }
 
     @Override
@@ -46,12 +71,21 @@ public class AlunoServiceImpl implements IAlunoService {
     public List<Aluno> getAll(String dataDeNascimento) {
 
         if (dataDeNascimento == null) {
-            return alunoRepository.findAll();
+            Sort sort = Sort.by("id").descending().and(
+                    Sort.by("nome").ascending()
+            );
+            return alunoRepository.findAll(sort);
         }
         else {
             LocalDate localDate = LocalDate.parse(dataDeNascimento, JavaTimeUtils.LOCAL_DATE_FORMATTER);
             return alunoRepository.findByDataDeNascimento(localDate);
         }
+    }
+    public List<Aluno> getConsultaPaginada(Integer numPagina, Integer numRegistros) {
+        PageRequest pag = PageRequest.of(numPagina, numRegistros);
+        Page<Aluno> result = alunoRepository.findAll(pag);
+        return result.stream().toList();
+
     }
     @Transactional(readOnly = false)
     @Override
@@ -76,6 +110,8 @@ public class AlunoServiceImpl implements IAlunoService {
 
         return aluno.getAvaliacoes();
     }
+
+
 
 
 }
